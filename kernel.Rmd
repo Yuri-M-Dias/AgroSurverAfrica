@@ -1,0 +1,77 @@
+---
+title: "Agricultural Survey Dataset"
+output: 
+  html_document:
+    keep_md: true
+---
+
+# Agricultural Survery Dataset
+
+I am following @rtatman's tutorial on this dataset, just doing it with RMarkdown instead.
+
+# Section 1
+
+```{r housing}
+library(tidyverse)
+library(data.table)
+```
+
+I'll be using `data.table` instead of the normal Tibble, for learning purposes.
+
+```{r}
+musselData <- fread("data/histopaths.csv")
+```
+
+And get the dimensions
+```{r}
+dim(musselData)
+```
+
+# Section 2 - Piping
+
+```{r}
+columnNames <- musselData %>%
+  names() %>%
+  sort()
+head(columnNames)
+```
+
+
+# Section 3
+
+```{r}
+musselData %>%
+  select(starts_with('cestode')) %>%
+  summary()
+```
+
+```{r}
+musselData %>%
+  select(-starts_with('cestode')) %>%
+  names() %>%
+  sort() %>%
+  head(20) 
+```
+
+# Section 4
+
+```{r}
+musselData %>%
+  filter(abnormality > 3)
+```
+
+```{r}
+musselData %>%
+  filter(coastal_ecological_area == 'Lake Michigan')
+```
+
+```{r}
+plyrWay3 <- musselData %>%
+  filter(sex == 'Male' & state_name == 'Mississippi')
+tableWay <- musselData[sex == 'Male' & state_name == 'Mississippi']
+all.equal(plyrWay3, tableWay)
+```
+
+# Section 5
+
+
