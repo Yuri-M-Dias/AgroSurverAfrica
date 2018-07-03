@@ -1,11 +1,11 @@
 ---
-title: "Agricultural Survey Dataset"
+title: "Mamals...stuff dataset"
 output: 
   html_document:
     keep_md: true
 ---
 
-# Agricultural Survery Dataset
+# "Something about sea animals stuff" Dataset
 
 I am following @rtatman's tutorial on this dataset, just doing it with RMarkdown instead.
 
@@ -74,4 +74,46 @@ all.equal(plyrWay3, tableWay)
 
 # Section 5
 
+```{r}
+musselData %>%
+  mutate(large_mussels = (wet_weight > 10)) %>%
+  select(large_mussels) %>%
+  summary()
+```
 
+```{r}
+musselData %>%
+  mutate(parasites = (wet_weight > .5 & unidentified_organism > 1)) %>%
+  select(parasites) %>%
+  summary()
+```
+
+# Section 6
+
+```{r}
+musselData %>%
+  arrange(desc(length)) %>%
+  select(length) %>%
+  head()
+```
+
+# Section 7
+
+```{r}
+musselData %>%
+  summarize(meanLength = mean(length), medianLength = median(length, na.rm = T))
+```
+
+# Section 8
+
+```{r}
+musselData %>%
+  group_by(state_name) %>%
+  summarize(meanLength = mean(length), medianLength = median(length, na.rm=T))
+```
+
+```{r}
+musselData %>%
+  group_by(coastal_ecological_area) %>%
+  summarize(meanLength = mean(length), medianLength = median(length, na.rm=T))
+```
